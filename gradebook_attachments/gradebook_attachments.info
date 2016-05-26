@@ -1,0 +1,19 @@
+; $Id: gradebook_attachments.info,v 1.1.2.1 2009/04/02 05:38:07 mgn Exp $
+name = Gradebook Attachments
+description = "Provides file attachments for gradebook assignments."
+package = Gradebook
+dependencies[] = taxonomy
+dependencies[] = gradebookapi
+dependencies[] = gradebook
+dependencies[] = upload
+core = 7.x
+
+
+
+; Information added by drupal.org packaging script on 2009-06-03
+version = "6.x-2.x-dev"
+core = 7.x
+project = "gradebook"
+datestamp = "1244031225"
+
+

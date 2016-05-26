@@ -1,0 +1,116 @@
+<?php
+// $Id: gradebook_responses.install,v 1.1.2.2 2009/04/11 05:08:46 mgn Exp $
+
+/**
+ * @file
+ * gradebook_responses.install: Install schema for gradebook_responses
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_responses_schema() {
+
+  $schema['gradebook_responses'] = array(
+    'fields' => array(
+      'nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'aid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'rstatus' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+      ),
+    ),
+    'indexes' => array(
+      'aid' => array('aid'),
+      'uid' => array('uid'),
+      'rstatus' => array('rstatus'),
+    ),
+    'primary key' => array('nid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_responses_install() {
+  // Create tables.
+  // TODO The drupal_(un)install_schema functions are called automatically in D7.
+  // drupal_install_schema('gradebook_responses')
+  db_add_field('gradebookapi_assignment', 'response_types', array('type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => t("A comma delimited list of allowed response types for this assignment.")));
+  // Insure that submodules have a greater weight than gradebookapi
+  $weight = (int) db_query("SELECT weight FROM {system} WHERE name = :name", array(':name' => 'gradebookapi'))->fetchField();
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("UPDATE {system} SET weight = %d WHERE name = 'gradebook_responses'", $weight + 1) */
+  db_update('system')
+  ->fields(array(
+    'weight' => $weight + 1,
+  ))
+  ->condition('name', 'gradebook_responses')
+  ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function gradebook_responses_uninstall() {
+
+  // Remove tables.
+  // TODO The drupal_(un)install_schema functions are called automatically in D7.
+  // drupal_uninstall_schema('gradebook_responses')
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_responses_update_6200() {
+  // Insure that submodules have a greater weight than gradebookapi
+  $weight = (int) db_query("SELECT weight FROM {system} WHERE name = :name", array(':name' => 'gradebookapi'))->fetchField();
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("UPDATE {system} SET weight = %d WHERE name = 'gradebook_responses'", $weight + 1) */
+  db_update('system')
+  ->fields(array(
+    'weight' => $weight + 1,
+  ))
+  ->condition('name', 'gradebook_responses')
+  ->execute();
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_responses_update_6201() {
+  db_add_field('gradebookapi_assignment', 'response_types', array('type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => t("A comma delimited list of allowed response types for this assignment.")));
+}

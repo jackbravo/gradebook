@@ -1,0 +1,129 @@
+/* $Id: gradebook.css,v 1.3.6.1.2.5 2009/04/02 05:38:06 mgn Exp $ */
+
+/**
+ * @file
+ * CSS rules for formating the gradebook
+ */
+
+/**
+ *  This container surrounds the gradebook_page.
+ *  Adds scrollbars to keep table under control.
+ */
+
+#gradebook-container {
+  overflow: auto;
+}
+
+/**
+ *  Style the links above the gradebook grade page.
+ *  Each link is an item in an unordered list.
+ */
+
+#gradebook-grade-page-links {
+  background-color: #c0c0c0;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  font-size: 100%;
+  list-style-type: circle;
+}
+
+#gradebook-grade-page-links ul {
+  margin: 0;
+  padding: 0;
+}
+
+#gradebook-grade-page-links li {
+  display: inline;
+  padding: 0;
+}
+
+/**
+ *  Rules to format the gradebook table 
+ */
+
+.gradebook {
+  width: 100%;
+  font-size: 80%;
+  border: 1px solid #ccc;
+}
+
+/**
+ *  Rules for formatting gradebook table header rows and columns
+ */
+
+.gradebook th,
+.gradebook .category,
+.gradebook .date,
+.gradebook .title,
+.gradebook .name,
+.gradebook .edit-all,
+.gradebook .exempt-box {
+  border: 2px solid #ccc;
+  text-align: center;
+}
+
+.gradebook .select {
+  border: 2px solid #ccc;
+  text-align: center;
+}
+
+.gradebook .earned-possible {
+  border: 2px solid #ccc;
+  text-align: center;
+}
+
+.gradebook .note {
+  border: 2px solid #ccc;
+  text-align: left;
+}
+
+.gradebook .average {
+  border: 2px solid #ccc;
+  color: #FF0000;
+  text-align: center;
+}
+
+/**
+ * Rules for formating gradebook table grade entries
+ */
+
+.gradebook .grade {
+  text-align: center;
+}
+
+.gradebook .grade-response,
+.gradebook .grade-response a {
+  color: #FF0000;
+  text-align: center;
+  font-size: 130%;
+}
+
+.gradebook .grade-attachment,
+.gradebook .grade-attachment a {
+  color: #FF0000;
+  text-align: center;
+  font-weight: bold;
+}
+
+.gradebook .grade-attachment-response,
+.gradebook .grade-response-attachment,
+.gradebook .grade-response-attachment a,
+.gradebook .grade-attachment-response a {
+  color: #FF0000;
+  text-align: center;
+  font-size: 130%;
+  font-weight: bold;
+}
+
+/**
+ *  Rules to provide line through exempted grade
+ */
+
+.gradebook  .exempt,
+.gradebook  .exempt a {
+  text-decoration: line-through;
+  color: #AA0000;
+}
+

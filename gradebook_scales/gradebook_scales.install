@@ -1,0 +1,180 @@
+<?php
+// $Id: gradebook_scales.install,v 1.1.2.1 2009/04/02 05:38:07 mgn Exp $
+
+/**
+ * @file
+ * gradebook_scales.install: Install schema for gradebook_scales
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_scales_schema() {
+
+  $schema['gradebook_scales_calc_method'] = array(
+    'fields' => array(
+      'gid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'calcmethod' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('gid'),
+  );
+
+  $schema['gradebook_scales_grade_weight'] = array(
+    'fields' => array(
+      'gid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'tid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'gradeweight' => array(
+        'type' => 'float',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('gid', 'tid'),
+  );
+
+  $schema['gradebook_scales'] = array(
+    'fields' => array(
+      'sid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'gid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'scalename' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+      ),
+    ),
+    'indexes' => array(
+      'gid' => array('gid'),
+    ),
+    'primary key' => array('sid'),
+  );
+
+  $schema['gradebook_scales_data'] = array(
+    'fields' => array(
+      'mid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'sid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'min' => array(
+        'type' => 'float',
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'max' => array(
+        'type' => 'float',
+        'unsigned' => FALSE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'mark' => array(
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('mid', 'sid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install().
+ */
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_scales_install() {
+  // Create tables.
+  // TODO The drupal_(un)install_schema functions are called automatically in D7.
+  // drupal_install_schema('gradebook_scales')
+  db_add_field('gradebookapi_assignment', 'sid', array('type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE));
+
+  // Insure that submodules have a greater weight than gradebookapi
+  $weight = (int) db_query("SELECT weight FROM {system} WHERE name = :name", array(':name' => 'gradebookapi'))->fetchField();
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("UPDATE {system} SET weight = %d WHERE name = 'gradebook_scales'", $weight + 1) */
+  db_update('system')
+  ->fields(array(
+    'weight' => $weight + 1,
+  ))
+  ->condition('name', 'gradebook_scales')
+  ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function gradebook_scales_uninstall() {
+
+  // All gradebook UI modules should delete their taxonomy trees
+
+  // Remove tables.
+
+  // TODO The drupal_(un)install_schema functions are called automatically in D7.
+  // drupal_uninstall_schema('gradebook_scales')
+  $ret = array();
+  db_drop_field('gradebookapi_assignment', 'sid');
+
+  return $ret;
+}
+
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
+function gradebook_scales_update_6001() {
+  // Insure that submodules have a greater weight than gradebookapi
+  $weight = (int) db_query("SELECT weight FROM {system} WHERE name = :name", array(':name' => 'gradebookapi'))->fetchField();
+  // TODO Please review the conversion of this statement to the D7 database API syntax.
+  /* db_query("UPDATE {system} SET weight = %d WHERE name = 'gradebook_scales'", $weight + 1) */
+  db_update('system')
+  ->fields(array(
+    'weight' => $weight + 1,
+  ))
+  ->condition('name', 'gradebook_scales')
+  ->execute();
+}

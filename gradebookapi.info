@@ -1,0 +1,16 @@
+; $Id: gradebookapi.info,v 1.1.4.2.2.5 2009/03/07 16:36:34 mgn Exp $
+name = Gradebook API
+description = "Provides a gradebook API."
+package = Gradebook
+dependencies[] = taxonomy
+core = 7.x
+
+
+; Information added by drupal.org packaging script on 2009-06-03
+version = "6.x-2.x-dev"
+core = 7.x
+project = "gradebook"
+datestamp = "1244031225"
+
+
+files[] = gradebook_export.inc

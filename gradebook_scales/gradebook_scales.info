@@ -1,0 +1,18 @@
+; $Id: gradebook_scales.info,v 1.1.2.1 2009/04/02 05:38:07 mgn Exp $
+name = Gradebook Scales and Weights
+description = "Provides assignment scales and gradebook category weights."
+package = Gradebook
+dependencies[] = taxonomy
+dependencies[] = gradebookapi
+dependencies[] = gradebook
+core = 7.x
+
+
+
+; Information added by drupal.org packaging script on 2009-06-03
+version = "6.x-2.x-dev"
+core = 7.x
+project = "gradebook"
+datestamp = "1244031225"
+
+
